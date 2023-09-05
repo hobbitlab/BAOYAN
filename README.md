@@ -23,6 +23,16 @@
 |      |              |                        |
 |      |              |                        |
 
+## 一些说明
+
+- word版文书使用前请先安装 `font` 文件夹内的所有字体
+
+- 个人简历latex版建议使用 [Overleaf](www.overleaf.com) 在线编译，将 `个人简历模板-latex` 文件夹压缩成 `.zip` 压缩包上传直接可以使用，注意编译环境设置如下，否则可能会报错
+
+	<img src="https://lgy0404.oss-cn-shanghai.aliyuncs.com/typoraimage-20230905203408027.png" alt="image-20230905203408027" style="zoom:50%;" />
+
+
+
 ---
 
 ❤️对你有帮助的话点个star吧~❤️

@@ -1,0 +1,91 @@
+\resheading{\centering{SLN阅读笔记}}
+  \begin{itemize}[leftmargin=*]
+  	\item
+  	\ressubsingleline{论文：Learning Semantics-aware Distance Map with Semantics Layering Network}{}{}
+  	{
+  	}
+    \item
+      \ressubsingleline{亮点}{}{}
+      {\small
+      \begin{itemize}
+        \item 提出一个semantics-aware distance map(sem-dist)作为实例分割的映射，能够将所有目标统一为一个紧凑表示。
+        \item 提出了一种新的CNN结构(semantics layering network)来解决实例语义分割问题。
+        \begin{figure}
+         	\centering
+         	\includegraphics[width=7in]{gao1.png}
+         	\caption{SEMANTICS LAYERING NETWORK-语义分层网络\label{sa}}
+         \end{figure}
+      \end{itemize}
+      }
+    \item
+      \ressubsingleline{语义感知距离地图（SEMANTICS-AWARE DISTANCE MAP）
+      	}{}{}
+      {\small
+      \begin{itemize}
+        \item 与实例分割中常用的heatmap不同，在实例分割中，每个像素测量一个对象可见部分出现的置信度，范围从0到1,sem-dist map描述了整个对象的像素级可视性，其中每个像素值的范围从0到正无穷大，强调当某个物体在一个图像中是可见的，模态分割框架应该有更高的置信度来预测一个物体部分的出现，
+		\begin{equation}M(x, y)=C(x, y)-L(x, y)\end{equation}
+		\item sem-dist地图包含丰富的目标信息。首先，它包含一个对象的模式分段和模态分段。
+		\begin{equation}M_{ {modal}}(x, y)=\left\{\begin{array}{ll}
+		M(x, y), & M(x, y) \in[0,1) \\
+		0  &  { otherwise }
+		\end{array}\right.\end{equation}
+		\begin{equation}M_{a m o d a l}(x, y)=M(x, y)-\lfloor M(x, y)\rfloor\end{equation}
+		\item 对于两个物体的sem-dist地图上的同一区域，其中一个物体遮挡了另一个物体。因此还可以利用sem-dist地图获取他们的深度信息，取两个相对应的sem-dist地图的整数部分的差
+		\begin{equation}R_{A B}(x, y)=\left\{\begin{array}{ll}
+		\left\lfloor M_{A}(x, y)\right\rfloor-\left\lfloor M_{B}(x, y)\right\rfloor, & (x, y) \in \Omega_{A B} \\
+		0, &  { otherwise }
+		\end{array}\right.\end{equation}
+		\item A和B两个相交区域的表示方式
+		\begin{equation}
+		\Omega_{A B}=\{(x, y) |\left(M_{A}(x, y)-\left\lfloor M_{A}(x, y)\right\rfloor\right) \left.\left(M_{B}(x, y)-\left\lfloor M_{B}(x, y)\right\rfloor\right)>c^{2}\right\}
+		\end{equation}
+		\item 这个模块后面部分举了一个example来说明这个创新点的进一步理解和相应的作用
+      \end{itemize}
+      
+      }
+  
+    \item
+    \ressubsingleline{主干网络结构(SLN)}{}{}
+    {\small
+    \begin{itemize}
+      \item SLN 是一个两阶段网络，包含四个模块：编码器网络（ENC）、区域建议网络（RPN）[这个模块不是作者的创新点，作者未对其做详细描述]、全局分层模块（GLM）和实例分层模块（ILM），整体还是类似一个Mask R-CNN的结构
+    \end{itemize}
+    }
+    \item
+    \ressubsingleline{编码器网络（ENC）}{}{}
+    {\small
+    \begin{itemize}
+      \item ENC可以是一个任意的网络，它既有足够大的接收场来捕获全局信息，又有足够强大的能力来提取低层和高层特征。这里利用resnet-50,将不同的层次特征调整到统一大小.(这个地方，我理解到目前主要是将不同层次特征转换到统一大小再处理，还有一种方式就是就是直接利处理不同尺度的特征)
+
+    \end{itemize}
+    }
+    \item \ressubsingleline{全局分层模块（GLM）}{}{}
+    {\small
+    \begin{itemize}
+      \item 由于是sem dist映射描述了对象的全局可见性级别，而instance-level特征映射主要包含单个对象的信息。因此，除了使用具有更大感受野的编码器之外，引入了全局分层模块（GLM）来显式地编码全局分层映射中的全局可见性级别。
+  
+    \end{itemize}
+    }
+    \item \ressubsingleline{实例分层模块（ILM）}{}{}
+	{\small
+	\begin{itemize}
+		\item 虽然semdist地图可以直接回归，但是这篇文章先预测实例分层图作为中间表示，然后再从中估计最终的sem-dist地图。实例分层映射的定义类似于全局实例映射，只是前者只预测单个对象实例的分层模态热图，而不是所有对象。作者使用与GLM相同的体系结构来回归中间实例分层映射。然后利用下面式子从实例层映射中导出sem-dist映射，使用一个convn -relu- convn -relu-conv块，利用导出的sem-dist映射和ROI-Align层的特征来预测改进后的sem-dist映射。
+		\item \begin{equation}M(x, y)=C(x, y)-L(x, y)\end{equation}
+		
+	\end{itemize}
+	}
+    \item \ressubsingleline{Loss Function}{}{}
+	{\small
+	\begin{itemize}
+	\item 这里的损失函数比较容易理解，利用L1 loss, 对各部分的损失加权求和,同时监督
+	\begin{equation}\ell=\lambda_{R} \ell_{R}+\lambda_{G} \ell_{G}+\lambda_{I} \ell_{I}+\lambda_{M} \ell_{M}\end{equation}
+	\end{itemize}
+	}
+	 \item \ressubsingleline{实验部分}{}{}
+	{\small
+		\begin{itemize}
+			\item 进行了大量的实验，在COCOA和D2SA两个数据集上面都取得了不错的效果
+		\end{itemize}
+	}
+
+  \end{itemize}

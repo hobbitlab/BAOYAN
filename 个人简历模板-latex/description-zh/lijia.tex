@@ -1,0 +1,107 @@
+\resheading{\centering{BANet阅读笔记}}
+\begin{itemize}[leftmargin=*]
+	\item
+	\ressubsingleline{论文：Selectivity or Invariance: Boundary-aware Salient Object Detection}{}{}
+	{
+	}
+	\item
+	\ressubsingleline{亮点}{}{}
+	{\small
+		\begin{itemize}
+			\item 对于显著性目标检测任务进一步明确其主要的两个难点,是一个对于变与不变都有需求的问题.
+			\item 针对变与不变,提出了一种分而治之的模型,三支路各自实现不同的任务,三者相互补充.
+			\item 提出了一种新颖的ASPP的替代结构.不同扩张率的分支的特征逐个传递,实现了丰富的多尺度上下文信息的提取.
+		\end{itemize}
+	}
+	\item 
+	\ressubsingleline{两大改进思路}{}{}
+	{\small
+		\begin{itemize}
+			\item First, the interiors of a large salient object may have large appearance change, making it difficult to detect the salient object as a whole.
+			\item Second, the boundaries of salient objects may be very weak so that they cannot be distinguished from the surrounding background regions.
+			\begin{figure}
+				\centering
+				\includegraphics[width=7in]{lijia.png}
+				\caption{BANet-框架结构(ICCV2019)\label{sa}}
+			\end{figure}
+		\end{itemize}
+	}
+	\item
+	\ressubsingleline{网络结构
+	}{}{}
+	{\small
+		\begin{itemize}
+			\item 前面是常规的特征提取器(Vgg or Resnet) 
+			\item 后面分成三个分支：
+			边界定位分支、
+			转变补偿分支、
+			内部感知分支
+			\begin{equation}\left\{\begin{array}{ccc}
+			M_{s} & \wedge & M_{e}=M_{e} \\
+			M_{s} & \vee & M_{e}=M_{s}
+			\end{array}\right.\end{equation}
+		\end{itemize}
+	}
+	\item
+	\ressubsingleline{网络结构}{}{}
+	{\small
+		\begin{itemize}
+			\item 这里的主干网络是resnet-50，从4个残差块提取出两个任务的4个等级的特征。S和E分别代表分割的特征和边缘的特征。整体的网络结构如图5。整体还是基于一个U-Net的结构
+		\end{itemize}
+	}
+	\item
+	\ressubsingleline{交叉调整单元（Cross Refinement Unit ）}{}{}
+	{\small
+		\begin{itemize}
+			\item CRU被用来提升两个任务的多等级特征，CRU的可用下面的公式定义。CRU通过迭代的使用，他的输入是上一个的CRU的输出，f，g是分别被设计用来优化S和E的两个方法，然后还包括一个残差项。（之后有实验证明这个残差项的添加可以提升表现而且没有添加多少的计算量）
+			\begin{equation}\begin{array}{l}
+			S_{n}^{i}=S_{n-1}^{i}+f\left(S_{n-1}^{i}, E_{n-1}\right) \\
+			E_{n}^{i}=E_{n-1}^{i}+g\left(E_{n-1}^{i}, S_{n-1}\right)
+			\end{array}\end{equation}
+			\item 关于这个f和g的设计，作者提出了3种风格。这里的f和g实际上就是对与或操作（Boolean AND/OR operatin）的分别的实现。
+			
+		\end{itemize}
+	}
+	\item \ressubsingleline{Point-to-Point style（PPS}{}{}
+	{\small
+		\begin{itemize}
+			\item 点对点的风格，这里的点对点是，根据同一等级的特征的优化用同一等级的别的任务的特征来用。这里为了实现逻辑的与操作，使用了元素的相乘来近似，或操作则使用级联来实现，S和E进行级联后的一个3x3卷积里面输入通道为64，输出只有一半的32
+			\item 布尔与操作（Boolean AND operatio）-PPS
+			\begin{equation}g={Conv}\left(E_{n-1}^{i} \otimes S_{n-1}^{i}\right)\end{equation}
+			\item 布尔或操作（Boolean OR operatio）-PPS
+			\begin{equation}f={Conv}\left({Cat}\left(S_{n-1}^{i}, E_{n-1}^{i}\right)\right)\end{equation}
+		\end{itemize}
+	}
+	\item \ressubsingleline{Set-to-Point Style（SPS）}{}{}
+	{\small
+		\begin{itemize}
+			\item CU操作的目的在于确保分割和边缘特征的空间尺寸的一致性，当k比i小的时候会上采样，当比i大的时候会下采样，当相等的时候会恒等映射。所以会乘上4个等级的特征。一个等级的特征的调整会用上另一个任务的全部的特征
+			\item 布尔与操作（Boolean AND operatio）-SPS
+			\begin{equation}g={Conv}\left(E_{n-1}^{i} \otimes \prod_{k=1}^{4} C U\left(S_{n-1}^{k}\right)\right)\end{equation}
+			\item 布尔或操作（Boolean OR operatio）-SPS
+			\begin{equation}f={Conv}\left({Cat}\left(S_{n-1}^{i}, {Cat}_{k=1}^{4}\left[C U\left(E_{n-1}^{k}\right)\right]\right)\right)\end{equation}
+		\end{itemize}
+	}
+	\item \ressubsingleline{Selective Set-to-Point Style（SSPS）}{}{}
+	{\small
+		\begin{itemize}
+			\item 高等特征更关注的是区域的区分，因为在低等特征里有更多的干扰。所以提出一个可选的风格。这个风格里，特征只能被更高级的或同级的特征来调整，而不是被低等级的特征来调整。
+			\item 布尔与操作（Boolean AND operatio）-SSPS
+			\begin{equation}g={Conv}\left(E_{n-1}^{i} \otimes \prod_{k=1}^{4} C U\left(S_{n-1}^{k}\right)\right)\end{equation}
+			\item 布尔或操作（Boolean OR operatio）-SSPS
+			\begin{equation}f={Conv}\left({Cat}\left(S_{n-1}^{i}, {Cat}_{k=1}^{4}\left[C U\left(E_{n-1}^{k}\right)\right]\right)\right)\end{equation}
+		\end{itemize}
+	}
+	\item \ressubsingleline{loss函数}{}{}
+	{\small
+		\begin{itemize}
+			\item loss分别就是对这两个任务计算损失，采用常规的交叉熵损失函数
+		\end{itemize}
+	}
+	\item \ressubsingleline{实验部分}{}{}
+	{\small
+		\begin{itemize}
+			\item 实验部分做的十分充足，对于自身的有效性，CRU数量，与或对换，传递方式都进行了相关的实验，补充材料中，对最新且十分具有挑战的SOC数据集在各个属性下都进行了分析
+		\end{itemize}
+	}
+\end{itemize}

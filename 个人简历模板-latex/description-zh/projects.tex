@@ -1,0 +1,130 @@
+\resheading{部分详细介绍}
+  \begin{itemize}[leftmargin=*]
+    \item
+      \ressubsingleline{Deep Feature Fusion with Edge
+      	Highlighted for Salient Object Detection}{PyTorch框架}{}
+      {\small
+      \begin{itemize}
+        \item 投稿: 《Neurocomputing》 \qquad \textbf{SCI-2区} \qquad {第一作者}
+        \item To achieve better edge
+        acquisition and fusion, we propose a novel deep feature fusion with edge highlighted (DFEH) for salient
+        object detection. First, the difference between shallow features and high-level features is compensated
+        by Deep Residual Feedback (DRF) to obtain delicate edge and precise localization. Then, lightweight
+        Bounded Feature Fusion (BFF) is employed for feature weight reorganization by selection and combination.
+        Furthermore, we introduced a cascaded framework with local edge loss to effectively match the two fusion
+        modules for further improving the accuracy.
+        \item\begin{table}
+        	\centering
+        	\caption{ Benchmark score of 16 the latest leading RGB-SOD methods on 5 classical datasets. $**$ denotes the method uses the corresponding dataset as the training set. Red and green highlight the top two performances. The overall ranking (the sum of ranks) represents the total ranking in a particular metric for each approach. The top-1 scores with different backbones are marked with {\textcolor[rgb]{ 0,  0,  1}{\textbf{belu}}} and {\textcolor[rgb]{ 1,  0,  0}{\textbf{red}}}. }
+        	\setlength{\tabcolsep}{0.35mm}{
+        		\resizebox{\textwidth}{50mm}{
+        			\begin{tabular}{c|p{0.1cm}|cc|cccc|cccc|cccc|cccc|cccc|}
+        				\toprule
+        				\multicolumn{2}{|c|}{\multirow{2}[4]{*}{\large{\textbf{Metric}}}} & \multicolumn{2}{c|}{Training} & \multicolumn{4}{c|}{HKUIS}    & \multicolumn{4}{c|}{ECSSD}    & \multicolumn{4}{c|}{DUTS-TE}  & \multicolumn{4}{c|}{PASCALS}  & \multicolumn{4}{c|}{DUT-OMROM} \\
+        				\cmidrule{3-24}    \multicolumn{2}{|c|}{} & Images & Dataset & MAE$\downarrow$   & $\mathrm{F}_{\beta}\uparrow$     & $S_{\alpha}$$\uparrow$     & $\mathrm{E}_{\xi}$$\uparrow$     & MAE$\downarrow$   & $\mathrm{F}_{\beta}\uparrow$     & $S_{\alpha}$$\uparrow$     & $\mathrm{E}_{\xi}$$\uparrow$     & MAE$\downarrow$   & $\mathrm{F}_{\beta}\uparrow$     & $S_{\alpha}$$\uparrow$     & $\mathrm{E}_{\xi}$$\uparrow$     & MAE$\downarrow$   & $\mathrm{F}_{\beta}\uparrow$     & $S_{\alpha}$$\uparrow$     & $\mathrm{E}_{\xi}\uparrow$     & MAE$\downarrow$   & $\mathrm{F}_{\beta}\uparrow$     & $S_{\alpha}$$\uparrow$     & $\mathrm{E}_{\xi}$$\uparrow$ \\
+        				\midrule
+        				\multicolumn{24}{|l|}{\textbf{VGG-16 backbone}} \\
+        				\midrule
+        				\multicolumn{1}{|c|}{2016} & DHS   & 9500  & MK+DTO & .052  & .881  & .870  & .913  & .060  & .865  & .884  & .913  & .067  & .769  & .820  & .857  & .092  & .802  & .839  & .848  &$**$    & $**$    & $**$    & $**$ \\
+        				\cmidrule{1-1}    \multicolumn{1}{|c|}{\multirow{6}[2]{*}{2017}} & UCF   & 10000 & MK    & .061  & .860  & .874  & .896  & .069  & .836  & .884  & .896  & .111  & .694  & .785  & .772  & .116  & .768  & .834  & .811  & .111  & .663  & .758  & .774 \\
+        				\multicolumn{1}{|c|}{} & AMU   & 10000 & MK    & .050  & .883  & .886  & .912  & .059  & .861  & .894  & .912  & .058  & .731  & .807  & .814  & .100  & .789  & .849  & .834  & .097  & .693  & .783  & .785 \\
+        				\multicolumn{1}{|c|}{} & FSN   & 10000 & MK    & .044  & .892  & .879  & .926  & .053  & .875  & .884  & .926  & .066  & .763  & .812  & .861  & .093  & .803  & .810  & .851  & .066  & .740  & .806  & .846 \\
+        				\multicolumn{1}{|c|}{} & NLDF  & 3000  & MB    & .043  & .887  & .875  & .921  & .063  & .892  & .875  & .907  & .065  & .783  & .819  & .857  & .098  & .807  & .805  & .843  & .080  & .736  & .770  & .806 \\
+        				\multicolumn{1}{|c|}{} & SRM   & 10553 & DUTS  & .046  & .897  & .887  & .921  & .054  & .882  & .895  & .921  & .084  & .797  & .839  & .872  & .084  & .816  & .847  & .861  & .069  & .744  & .801  & .827 \\
+        				\multicolumn{1}{|c|}{} & MSRN  & 5000  & MB+HKU & .040  & .882  & .903  & .922  & .054  & .881  & .895  & .922  & .061  & .778  & .842  & .869  & .081  & .812  & .804  & .867  & .073  & .731  & .811  & .831 \\
+        				\cmidrule{1-1}    \multicolumn{1}{|c|}{\multirow{4}[2]{*}{2018}} & C2S   & 10553 & DUTS  & .047  & .889  & .887  & .925  & .053  & .868  & .896  & .925  & .062  & .775  & .834  & .870  & .081  & .814  & .818  & .871  & .072  & .727  & .802  & .832 \\
+        				\multicolumn{1}{|c|}{} & DGRL  & 10553 & DUTS  & .038  & .909  & .896  & .939  & .043  & .895  & .906  & .939  & .050  & .818  & .845  & .895  & \textcolor[rgb]{0,  0,  1}{\textbf{.074}} & .826  & .839  & .877  & .063  & .758  & .813  & .848 \\
+        				\multicolumn{1}{|c|}{} & PICA  & 10553 & DUTS  & .042  & .897  & .905  & .930  & .047  & .882  & .913  & .930  & .053  & .797  & .862  & .882  & .078  & .816  & .822  & .871  & .067  & .734  & .824  & .837 \\
+        				\multicolumn{1}{|c|}{} & PAGR  & 10553 & DUTS  & .048  & .904  & .889  & .909  & .061  & .891  & .889  & .909  & .055  & .823  & .842  & .867  & .089  & .825  & .838  & .846  & .071  & .748  & .778  & .792 \\
+        				\cmidrule{1-1}    \multicolumn{1}{|c|}{\multirow{2}[2]{*}{2019}} & CPD   & 10553 & DUTS  & .033  & .901  & .904  & .942  & .040  & .915  & .910  & .939  & .043  & .846  & .870  & .906  & .081  & .829  & .842  & .866  & .057  & .775  & .821  & .849 \\
+        				\multicolumn{1}{|c|}{} & EG    & 10553 & DUTS  & .035  & .896  & .910  & .942  & .041  & .913  & \textcolor[rgb]{ 0,  0,  1}{\textbf{.919}} & .940  & .043  & .842  & \textcolor[rgb]{ 0,  0,  1}{\textbf{.881}} & .903  & .084  & .825  & \textcolor[rgb]{ 0,  0,  1}{\textbf{.847}}  & .864  & .056  & {.777} & \textcolor[rgb]{ 0,  0,  1}{\textbf{.837}} & \textcolor[rgb]{ 0,  0,  1}{\textbf{.856}} \\
+        				\cmidrule{1-2}    \multicolumn{2}{|p{8.11em}|}{BCNet} & 10553 & DUTS  & \textcolor[rgb]{0,  0,  1}{\textbf{.031}} & \textcolor[rgb]{ 0,  0,  1}{\textbf{.915}} & \textcolor[rgb]{ 0,  0,  1}{\textbf{.908}} & \textcolor[rgb]{ 0,  0,  1}{\textbf{.947}} & \textcolor[rgb]{ 0,  0,  1}{\textbf{.037}} & \textcolor[rgb]{0,  0,  1}{\textbf{.930}} & .916  & \textcolor[rgb]{0,  0,  1}{\textbf{.945}} & \textcolor[rgb]{ 0,  0,  1}{\textbf{.040}} & \textcolor[rgb]{ 0,  0,  1}{\textbf{.854}} & .876  & \textcolor[rgb]{0,  0,  1}{\textbf{.910}} & .084  & \textcolor[rgb]{ 0,  0,  1}{\textbf{.839}} & {{.839}} & \textcolor[rgb]{0,  0,  1}{\textbf{.864}} & \textcolor[rgb]{ 0,  0,  1}{\textbf{.051}} & \textcolor[rgb]{ 0,  0,  1}{\textbf{.777}} & .832  & .852 \\
+        				\midrule
+        				\multicolumn{24}{|l|}{\textbf {ResNet-50 backbone}} \\
+        				\midrule
+        				\multicolumn{1}{|c|}{\multirow{4}[2]{*}{2019}} & AF    & 10553 & DUTS  & .036  & .901  & .906  & .938  & .042  & .901  & .914  & .938  & .045  & .830  & .870  & .898  & .071  & .840  & .849  & .882  & .057  & .765  & .828  & .848 \\
+        				\multicolumn{1}{|c|}{} & BAS   & 10553 & DUTS  & .032  & .913  & .909  & .947  & .037  & .913  & .916  & .947  & .047  & .841  & .869  & .900  & .076  & .834  & .838  & .878  & .056  & .781  & .837  & \textcolor[rgb]{ 1,  0,  0}{\textbf{.870}} \\
+        				\multicolumn{1}{|c|}{} & CPD   & 10553 & DUTS  & .034  & .905  & .906  & .944  & .037  & .905  & .918  & .944  & .043  & .843  & .872  & .905  & .071  & .841  & .848  & .881  & .056  & .776  & .825  & .857 \\
+        				\multicolumn{1}{|c|}{} & EG    & 10553 & DUTS  & .032  & .908  & .915  & .946  & .037  & .908  & {{.925}} & .946  & .039  & .853  & .889  & .912  & .074  & .842  & .852  & .879  & .053  & .776  & {.838} & .857 \\
+        				\cmidrule{1-1}    \multicolumn{1}{|c|}{2020} & GCPA & 10553 & DUTS  & .032  & .906  & .911  & .945  & .036  & .906  & \textcolor[rgb]{ 1,  0,  0}{\textbf{.925}} & .945  & .038  & .851  & \textcolor[rgb]{ 1,  0,  0}{\textbf{.893}} & .914  & {{.070}} & .838  & \textcolor[rgb]{ 1,  0,  0}{\textbf{.861}}  & .894  & .057  & .773  & \textcolor[rgb]{ 1,  0,  0}{\textbf{.838}} & .856 \\
+        				\cmidrule{1-2}    \multicolumn{2}{|p{8.11em}|}{BCNet} & 10553 & DUTS  & \textcolor[rgb]{ 1,  0,  0}{\textbf{.028}} & \textcolor[rgb]{ 1,  0,  0}{\textbf{.915}} & \textcolor[rgb]{ 1,  0,  0}{\textbf{.916}} & \textcolor[rgb]{ 1,  0,  0}{\textbf{.950}} & \textcolor[rgb]{ 1,  0,  0}{\textbf{.033}} & \textcolor[rgb]{ 1,  0,  0}{\textbf{.933}} & .921  & \textcolor[rgb]{ 1,  0,  0}{\textbf{.954}} & \textcolor[rgb]{ 1,  0,  0}{\textbf{.036}} & \textcolor[rgb]{ 1,  0,  0}{\textbf{.867}} & .879  & \textcolor[rgb]{ 1,  0,  0}{\textbf{.916}} & \textcolor[rgb]{ 1,  0,  0}{\textbf{.681}} & \textcolor[rgb]{ 1,  0,  0}{\textbf{.854}} & {{.847}} & \textcolor[rgb]{ 1,  0,  0}{\textbf{.883}} & \textcolor[rgb]{ 1,  0,  0}{\textbf{.053}} & \textcolor[rgb]{ 1,  0,  0}{\textbf{.787}} & .824  & .850 \\
+        				\bottomrule
+        			\end{tabular}%
+        			\label{tab:addlabel}}}%
+        \end{table}%
+         
+      \end{itemize}
+      }
+    \item
+      \ressubsingleline{基于子网络 级联式混合信息流的显著性检测
+      	}{PyTorch框架}{}
+      {\small
+      \begin{itemize}
+        \item 投稿: 《光电工程》 \qquad 光电研究所主办\qquad\textbf{北大核心} \qquad {第一作者}
+        \item 通过多层子网络分层挖掘构建级联式网络框架，充分利用各层次特征的上下文信息将检测与分割任务联合处理，采用 混合信息流方式集成 多尺度特性，逐步学习更具有辨别能力的特征信息。最后，嵌入注意力机 将显著性特征作为掩码有效地补偿深层语义信息，进一步
+        区分前景和杂乱的背景    
+        \item\begin{figure}
+        	\centering
+        	\includegraphics[width=7in]{p2.png}
+        	\caption{基于子网络级联式混合信息流的显著性检测-框架结构(光电工程)\label{sa}}
+        \end{figure}
+        \item 
+      \end{itemize}
+      }
+    \item
+    \ressubsingleline{基于渐进结构感受野和全局注意力的显著性检测}{PyTorch框架}{}
+    {\small
+    \begin{itemize}
+      \item 投稿: 《电子科技》 \qquad 西安电子科技大主办\qquad\textbf{} \qquad {第一作者}
+      \item 该方法利用全卷积神经网络获取多个层次粗糙的初始特征并结合特征金字塔结构对其深度
+      解析。设计渐进结构感受野模块将特征转换至不同尺度的空间进行优化，实现特征的渐进融合与传递，有选择性
+      的增强显著性区域。采用全局注意力机制消除背景噪声并建立显著性像素之间的长距离依赖，以提高显著性区域
+      的有效性，突出显著性目标，再通过学习融合个层次特征得到显著图
+      \begin{figure}
+      	\centering
+      	\includegraphics[width=7in]{p3.png}
+      	\caption{基于渐进结构感受野和全局注意力的显著性检测-PR曲线(电子科技)\label{sa}}
+      \end{figure}
+    \end{itemize}
+    }
+    \item
+    \ressubsingleline{基于机器视觉的疲劳驾驶检测}{Python}{已完成}
+    {\small
+    \begin{itemize}
+      \item 由于外轮廓具有准确的张口度；头部较大旋转仍能计算张口度。通过嘴部外轮廓进行边缘角点检测，获取嘴部和眼部外轮廓的位置，通过算法，判断每一帧图像是否达到阈值，即在打哈欠，同时计算打哈欠的个数，计算单位时间内打哈欠的频率，判断是否疲劳
+      \begin{figure}
+      	\centering
+      	\includegraphics[width=6.8in]{pilao.pdf}
+      	\caption{基于机器视觉的疲劳驾驶检测(弱光条件下的检测结果)\label{sa}}
+      \end{figure}
+    \end{itemize}
+    }
+    \item \ressubsingleline{飞思卡尔信标组}{openmv/嵌入式开发}{飞思卡尔大赛}
+    {\small
+    \begin{itemize}
+      \item 所做的工作: 负责信标识别部分，信标为圆柱状以一定的频率发射红光，但是地面会有强烈的反光，阈值分割后会呈现许多点状，丝状，大块状的噪声干扰。采用了密度指标，解决了车队这两年比赛信标识别的问题
+    \end{itemize}
+    }
+    \item \ressubsingleline{基于双线性池化的复杂结构铸件缺陷检测方法}{PyTorch/嵌入式开发}{光电杯}
+	{\small
+	\begin{itemize}
+		\item 所做的工作：模型设计以及简化，为了能产生双线性池化的输入，采用两个相同权重的同结构网络。两个网络的输入相同，由于权重相同所以输出也相同。两个网络的输出特征，经过双线性池化后，送入全连接层，利用Softmax分类器对结果进行分类
+	\end{itemize}
+	}
+    \item \ressubsingleline{血常规检查中各项指标对患者健康状况的影响分析}{SPSS/MATLAB}{数学建模}
+	{\small
+	\begin{itemize}
+	\item 所做的工作：采用聚类分析、判别分析、因子分析的模型。建立判别函数，给各个因素按照实际情况分配一定的比重即求得判别系数，确定判别准则并检验判别的结果并对待判别样本进行判别分类以及检验判别的效果， 用此数学模型来描述血常规的检查结果与患者健康状况的关系，最终进行因子分析，找出主要影响因素
+	\end{itemize}
+	}
+	 \item \ressubsingleline{基于数字图像处理技术的缺陷检测方法}{MATLAB/嵌入式开发}{市创项目}
+	{\small
+		\begin{itemize}
+			\item 所做的工作：预处理过程中，使用中值滤波和图像归一化操作，不仅可以较好的消除脉冲干扰噪声，且能减小环境光照因素对缺陷检测的影响。检测过程中，使用非线性滤波器来消除噪声，结合滤波前和滤波后的图像，通过差值法和阈值判断，分割出可能是缺陷的像素，得出初步的缺陷区域。然后在先验知识的基础上适当调整相关阈值，再融合图像的亮度、颜色、边缘等信息，判断出缺陷位置，再进行二值化处理，得到最后的缺陷检测结果
+			\item
+			\item
+			\item
+		\end{itemize}
+
+	}
+  \end{itemize}
