@@ -34,13 +34,15 @@
 
 ## 一些说明
 
-- word版文书使用前请先安装 `Fonts` 文件夹内的所有字体
+- word版文书、个人展示PPT模板使用前请先安装 `Fonts` 文件夹内的所有字体
 
 - 个人简历latex版建议使用 [Overleaf](www.overleaf.com) 在线编译，将 `个人简历模板-latex` 文件夹压缩成 `.zip` 压缩包上传直接可以使用，注意编译环境设置如下，否则可能会报错
 
 	<img src="https://lgy0404.oss-cn-shanghai.aliyuncs.com/typoraimage-20230905203408027.png" alt="image-20230905203408027" style="zoom:50%;" />
 
 - 可信度材料（中英文成绩单、在校证明）下载在 [融合门户](http://portal.cumt.edu.cn/)  【针对矿大的同学】
+
+- 一个很棒的学术风PPT模板：[lgy0404/CUMT-Beamer-Template: 中国矿业大学Beamer模板 (github.com)](https://github.com/lgy0404/CUMT-Beamer-Template)
 
 ---
 
