@@ -80,7 +80,7 @@
 
 ##### 举一个栗子：
 
-![个人简历](https://lgy0404.oss-cn-shanghai.aliyuncs.com/typora%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86.png)
+![个人简历1](https://lgy0404.oss-cn-shanghai.aliyuncs.com/typora%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%861.png)
 
 #### 个人陈述
 
