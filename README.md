@@ -1,11 +1,15 @@
-# BAOYAN
+# BAOYAN（推免材料准备与面经）
 
-✔️（持续更新）【保研文书与面经】推免期间的文书（个人简历、个人陈述）与面试经验。
+<center><b>✨祝大家都能拿到理想的offer✨</center>
+<center><b>❤️对你有帮助的话点个star吧~❤️</b></center>
+
+
 
 ## 🆕最新消息
 
 - 2023年9月3日：仓库初始化，上传部分资料
 - 2023年9月6日：资料完善，上传面经
+- 2023年9月8日：调整部分说明
 
 ## 📒资料目录
 
@@ -166,6 +170,7 @@
 - 一些有用的信息获取渠道：微信公众号（保研人等）会整理发布推免信息、Gitbub优质仓库，小红书、知乎等平台分享。
 - 确保充分了解目标院校，目标项目的真实情况。
 - 确定不去的offer提前和老师说明，给学弟学妹留下机会。
+- 可信度材料（中英文成绩单、在校证明）下载在 [融合门户](http://portal.cumt.edu.cn/)  。
 - 不到最后一刻不放弃，9月28之后还有很多机会。
 
 ## 🚩一些说明
@@ -176,7 +181,7 @@
 
 	<img src="https://lgy0404.oss-cn-shanghai.aliyuncs.com/typoraimage-20230905203408027.png" alt="image-20230905203408027" style="zoom:50%;" />
 
-- 可信度材料（中英文成绩单、在校证明）下载在 [融合门户](http://portal.cumt.edu.cn/)  【针对矿大的同学】
+- 
 
 - 一个很棒的学术风PPT模板：[lgy0404/CUMT-Beamer-Template: 中国矿业大学Beamer模板 (github.com)](https://github.com/lgy0404/CUMT-Beamer-Template)
 
